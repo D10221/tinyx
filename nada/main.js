@@ -19,6 +19,7 @@
             this.rememberme = wx.property(false);
             this.username = wx.property("");
             this.password = wx.property("");
+            wx.messageBus.listen("login-dialog-show").subscribe(function (e) { return _this.show(); });
             this.rememberme(true);
             this.loadUser = function () {
                 console.log('maybe loading user');
@@ -51,5 +52,35 @@
         }
         return LoginDialogViewModel;
     }());
-    wx.applyBindings(new LoginDialogViewModel(loginDialog), document.body);
+    var MainViewModel = (function () {
+        function MainViewModel() {
+            var _this = this;
+            this.brand = wx.property("Brilliant|Link...");
+            this.isBusy = wx.property(false);
+            this.showLoginCmd = wx.command(function () { return wx.messageBus.sendMessage({ x: "1" }, "login-dialog-show"); });
+            this.loadConfig = function () {
+                _this.isBusy(true);
+                Rx.Observable.timer(1000, 500)
+                    .take(1)
+                    .subscribe(function (e) {
+                    fetch('../data/app_settings.json')
+                        .then(function (r) { return r.json(); })
+                        .then(function (config) {
+                        _this.brand(config.brand || _this.brand());
+                        _this.isBusy(false);
+                        console.log("fetch config complete");
+                    }).catch(function (e) {
+                        console.log(e);
+                        _this.isBusy(false);
+                    });
+                });
+            };
+            this.loadConfig();
+        }
+        MainViewModel.prototype.loadConfig = function () {
+        };
+        return MainViewModel;
+    }());
+    wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
+    wx.applyBindings(new LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
 })();

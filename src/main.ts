@@ -1,10 +1,10 @@
 
 import Observable = Rx.Observable;
 
+var loginDialog = <tiny.Dialog>document.getElementById('login-dialog');
 
 namespace tiny {
 
-    var loginDialog = <tiny.Dialog>document.getElementById('login-dialog');
 
     import Observable = Rx.Observable;
 
@@ -45,6 +45,8 @@ namespace tiny {
 
         constructor(private dialog: Dialog) {
 
+            wx.messageBus.listen('login-dialog-show').subscribe(e=> this.show());
+
             this.rememberme(true);
 
             this.loadUser = () => {
@@ -80,7 +82,7 @@ namespace tiny {
             this.login = ()=> {
               this.close();
                 
-                console.log(`login ins as ${this.username()}: ${this.password()}`);
+                console.log(`login in as ${this.username()}: ${this.password()}`);
             };
         }
 
@@ -92,15 +94,13 @@ namespace tiny {
 
     export class MainViewModel {
 
-        loginDialogViewModel : LoginDialogViewModel ;
-
         brand = wx.property("Brilliant|Link...");
 
         isBusy = wx.property(false);
 
-        constructor() {
+        showLoginDialogCmd = wx.command(()=> wx.messageBus.sendMessage({}, "login-dialog-show"));
 
-            this.loginDialogViewModel = new LoginDialogViewModel(loginDialog);
+        constructor() {
 
             this.loadConfig = ()=> {
 
@@ -145,7 +145,9 @@ wx.router.go('home');
 
 var mainViewModel = new tiny.MainViewModel();
 
-wx.applyBindings(mainViewModel, document.body);
+wx.applyBindings(mainViewModel, document.getElementById("main-view"));
+
+wx.applyBindings(new tiny.LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
 
 // Observable.timer(500, 500).subscribe(e=> {
 //     mainViewModel.loginDialogViewModel.rememberme(

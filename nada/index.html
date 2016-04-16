@@ -5,8 +5,11 @@
     <title>Nada</title>
 </head>
 <body>
+<div id="main-view">
+    <buttom data-bind="command: showLoginCmd"> Login </buttom>
+</div>
 
-<buttom data-bind="command: showCmd"> Login </buttom>
+
 
 <dialog id="login-dialog">
     <h4  data-bind="text: label"></h4>
@@ -49,7 +52,9 @@
 </dialog>
 
 <script src="../node_modules/rx/dist/rx.all.js" ></script>
+
 <script src="../node_modules/webrx/dist/web.rx.js" ></script>
+
 <script src="main.js" ></script>
 <!--<script>
     var myViewModel = {

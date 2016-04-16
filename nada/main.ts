@@ -3,8 +3,7 @@
 (function () {
 
     var loginDialog = <Dialog>document.getElementById('login-dialog');
-
-
+    
     interface Dialog extends HTMLElement{
         showModal();
         close();
@@ -39,6 +38,8 @@
         password = wx.property("");
 
         constructor(private dialog: Dialog) {
+
+            wx.messageBus.listen("login-dialog-show").subscribe(e=> this.show());
 
             this.rememberme(true);
 
@@ -85,6 +86,50 @@
 
     }
 
-    wx.applyBindings(new LoginDialogViewModel(loginDialog), document.body);
+    class MainViewModel {
+
+        brand = wx.property("Brilliant|Link...");
+
+        isBusy = wx.property(false);
+
+        showLoginCmd = wx.command(()=> wx.messageBus.sendMessage({ x: "1"}, "login-dialog-show"));
+
+        constructor() {
+
+
+            this.loadConfig = ()=> {
+
+                this.isBusy(true);
+
+                Rx.Observable.timer(1000, 500)
+                    .take(1)
+                    .subscribe(e=> {
+
+                        fetch('../data/app_settings.json')
+                            .then(r=> r.json())
+                            .then(config=> {
+                                this.brand(config.brand || this.brand());
+                                this.isBusy(false);
+                                console.log("fetch config complete")
+                            }).catch(e=> {
+
+                            console.log(e);
+                            this.isBusy(false);
+                        });
+
+                    });
+            };
+
+            this.loadConfig();
+        }
+
+        private loadConfig() {
+
+        }
+    }
+
+    wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
+
+    wx.applyBindings(new LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
     
 })();
