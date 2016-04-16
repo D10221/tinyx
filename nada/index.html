@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nada</title>
+</head>
+<body>
+
+<buttom data-bind="command: showCmd"> Login </buttom>
+
+<dialog id="login-dialog">
+    <h4  data-bind="text: label"></h4>
+    <div >
+        <form id="sign-in-form">
+            <div >
+                <label for="username" > username: </label>
+                <input id="username"
+                       type="text"
+                       data-bind="value: @username ">
+            </div>
+
+            <div >
+                <label for="password"> Password: </label>
+                <input class="mdl-textfield__input"
+                       id="password"
+                       type="password"
+                       data-bind="value: @password">
+            </div>
+
+            <label for="checkbox-1" >
+                <input type="checkbox" id="checkbox-1"
+                       data-bind="checked: @rememberme">
+                        <span class="mdl-checkbox__label"
+                              id="xlabel">Keep me signed in</span>
+            </label>
+        </form>
+    </div>
+    <div >
+        <button
+                type="button"
+                data-bind="event: { click: loginCmd }">Ok</button>
+        <button
+                type="button"
+                data-bind="event: { click: closeCmd }">Cancel</button>
+    </div>
+    <script>
+
+    </script>
+</dialog>
+
+<script src="../node_modules/rx/dist/rx.all.js" ></script>
+<script src="../node_modules/webrx/dist/web.rx.js" ></script>
+<script src="main.js" ></script>
+<!--<script>
+    var myViewModel = {
+        personName: wx.property('Bob')
+    };
+
+    myViewModel.personName.changed.subscribe(function(newValue) {
+        console.log("The person's new name is " + newValue);
+    });
+
+    wx.applyBindings(myViewModel, document.body);
+</script>-->
+</body>
+</html>

@@ -1,0 +1,28 @@
+<dialog open modal class="mdl-dialog" data-bind="event: { onload: onloaded }" id="login-dialog">
+    <h4 class="mdl-dialog__title">Sign In</h4>
+    <div class="mdl-dialog__content">
+        <form id="sign-in-form">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" for="username"> username: </label>
+                <input class="mdl-textfield__input"  id="username" type="text">
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label" for="password"> Password: </label>
+                <input class="mdl-textfield__input"  id="password" type="password">
+            </div>
+
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1" >
+                <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" checked>
+                <span class="mdl-checkbox__label" id="xlabel">Keep me signed in</span>
+            </label>
+        </form>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button ok">Ok</button>
+        <button type="button" class="mdl-button cancel">Cancel</button>
+    </div>
+    <script>
+
+    </script>
+</dialog>

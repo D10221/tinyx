@@ -1,0 +1,291 @@
+<!-- https://github.com/GoogleChrome/dialog-polyfill -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiny-X</title>
+
+    <link rel="stylesheet" href="../lib/material/material.min.css">
+    <link rel="stylesheet" href="../styles/progress_bar.css" >
+
+    <style>
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url('../lib/material/iconfont/MaterialIcons-Regular.eot'); /* For IE6-8 */
+            src: local('Material Icons'),
+            local('MaterialIcons-Regular'),
+            url('../lib/material/iconfont/MaterialIcons-Regular.woff2') format('woff2'),
+            url('../lib/material/iconfont/MaterialIcons-Regular.woff')  format('woff'),
+            url('../lib/material/iconfont/MaterialIcons-Regular.ttf')   format('truetype');
+        }
+
+        .material-icons {
+            font-family: 'Material Icons',monospace;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+        }
+    </style>
+
+    <script src="../lib/material/material.min.js" ></script>
+    <!--<script src="../lib/jquery/jquery-1.11.3.min.js"></script>-->
+    <!--<script src="../lib/underscore/underscore-1.8.3-min-js"></script>-->
+    <script src="../lib/fetch/fetch.js" ></script>
+
+</head>
+
+<!--BODY-->
+<body>
+<!-- The drawer is always open in large screens. The header is always shown,
+  even in small screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title" data-bind="text: brand"></span>
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right"
+                 style="padding-right: 25px">
+                <label class="mdl-button mdl-js-button mdl-button--icon"
+                       for="fixed-header-drawer-exp">
+                    <i class="material-icons" style="padding-top: 3px">search</i>
+                </label>
+                <div class="mdl-textfield__expandable-holder">
+                    <input class="mdl-textfield__input" type="text" name="sample"
+                           id="fixed-header-drawer-exp">
+                </div>
+            </div>
+            <button id="show-sign-in-dialog"
+                    class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect "
+                    data-bind="command: loginDialogViewModel.showCmd">
+                <i class="material-icons">account_circle</i>
+            </button>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title" data-bind="text: brand">?</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="../">Home</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+        </nav>
+    </div>
+    <!--MAIN-->
+    <main class="mdl-layout__content">
+        <div class="progress"
+             style="height: 2px;margin-top: 7px"
+             data-bind="visible: isBusy">
+            <div class="indeterminate"></div>
+        </div>
+        <div class="page-content">
+            <!-- Your content goes here -->
+            <div class="mdl-tabs mdl-js-tabs">
+                <div class="mdl-tabs__tab-bar">
+                    <a href="#tab1" class="mdl-tabs__tab">Materials Tab</a>
+                    <a href="#tab2" class="mdl-tabs__tab">Tab Two</a>
+                    <a href="#tab3" class="mdl-tabs__tab">Tab Three</a>
+                </div>
+                <div class="mdl-tabs__panel is-active" id="tab1">
+                    <div class="page-content">
+                        <!-- Your content goes here -->
+                        <div class="mdl-grid" style="padding-top: 50px">
+                            <div class="mdl-cell mdl-cell--1-col"></div>
+                            <div class="mdl-cell mdl-cell--10-col">
+                                <!-- Wide card with share menu button -->
+                                <div class="mdl-card mdl-shadow--2dp" style="width: 750px">
+                                    <div class="mdl-card__title">
+                                        <h2 class="mdl-card__title-text">Materials</h2>
+                                    </div>
+                                    <div >
+                                        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable">
+                                            <thead>
+                                            <tr>
+                                                <th class="mdl-data-table__cell--non-numeric ">Material</th>
+                                                <th class="mdl-data-table__header--sorted-ascending">Quantity</th>
+                                                <th>Unit price</th>
+                                                <th>Tax</th>
+                                                <th>Nnn</th>
+                                                <th>Tax</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
+                                                <td>
+                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                        <input class="mdl-textfield__input"
+                                                               type="text"
+                                                               pattern="-?[0-9]*(\.[0-9]+)?"
+                                                               id="row0Column0">
+                                                        <label class="mdl-textfield__label" for="row0Column0">...</label>
+                                                        <span class="mdl-textfield__error">Invalid input!</span>
+                                                    </div>
+                                                </td>
+                                                <td> R2.90</td>
+                                                <td> R1.14</td>
+                                                <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
+                                                <td>250</td>
+                                                <td> R2.90</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
+                                                <td>50</td>
+                                                <td>R1.25</td>
+                                                <td>R1.14</td>
+                                                <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
+                                                <td>50</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+                                                <td>10</td>
+                                                <td>R12.35</td>
+                                                <td> R1.14</td>
+                                                <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+                                                <td>10</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="mdl-data-table__cell--non-numeric">None</td>
+                                                <td>100</td>
+                                                <td>R120.35</td>
+                                                <td> R10.14</td>
+                                                <td class="mdl-data-table__cell--non-numeric">None</td>
+                                                <td>100</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mdl-card__actions mdl-card--border">
+                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                            <!-- Right aligned menu below button -->
+                                            <i class="material-icons">chevron_left</i>
+                                        </button>
+                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                            <!-- Right aligned menu below button -->
+                                            <i class="material-icons">chevron_right</i>
+                                        </button>
+                                    </div>
+                                    <div class="mdl-card__menu">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable"
+                                             style="padding-top: 0" >
+                                            <label class="mdl-button mdl-js-button mdl-button--icon"
+                                                   for="table-search-text-field">
+                                                <i class="material-icons" style="padding-top: 3px">search</i>
+                                            </label>
+                                            <div class="mdl-textfield__expandable-holder" style="padding-top: 0">
+                                                <input class="mdl-textfield__input" type="text" name="sample"
+                                                       id="table-search-text-field">
+                                            </div>
+                                        </div>
+                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                            <!-- Right aligned menu below button -->
+                                            <i class="material-icons">autorenew</i>
+                                        </button>
+                                        <button id="demo-menu-lower-right"
+                                                class="mdl-button mdl-js-button mdl-button--icon">
+                                            <i class="material-icons">more_vert</i>
+                                        </button>
+                                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                            for="demo-menu-lower-right">
+                                            <li class="mdl-menu__item">Some Action</li>
+                                            <li class="mdl-menu__item">Another Action</li>
+                                            <li disabled class="mdl-menu__item">Disabled Action</li>
+                                            <li class="mdl-menu__item">Yet Another Action</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdl-cell mdl-cell--1-col"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdl-tabs__panel" id="tab2">
+                    <p>Second tab's content.</p>
+                </div>
+                <div class="mdl-tabs__panel" id="tab3">
+                    <p>Third tab's content.</p>
+                </div>
+            </div>
+        </div>
+
+        <dialog class="mdl-dialog" id="login-dialog">
+            <h4 class="mdl-dialog__title" data-bind="text: loginDialogViewModel.label"></h4>
+            <div class="mdl-dialog__content">
+                <form id="sign-in-form">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="username" > username: </label>
+                        <input class="mdl-textfield__input"
+                               id="username"
+                               type="text"
+                               data-bind="value: @loginDialogViewModel.username ">
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="password"> Password: </label>
+                        <input class="mdl-textfield__input"
+                               id="password"
+                               type="password"
+                               data-bind="value: @loginDialogViewModel.password">
+                    </div>
+
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1" >
+                        <input type="checkbox" id="checkbox-1"
+                               class="mdl-checkbox__input"
+                               data-bind="checked: @loginDialogViewModel.rememberme">
+                        <span class="mdl-checkbox__label"
+                              id="xlabel">Keep me signed in</span>
+                    </label>
+                </form>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button
+                    type="button"
+                    class="mdl-button ok"
+                    data-bind="event: { click: loginDialogViewModel.loginCmd }">Ok</button>
+                <button
+                    type="button"
+                    class="mdl-button cancel"
+                    data-bind="event: { click: loginDialogViewModel.closeCmd }">Cancel</button>
+            </div>
+            <script>
+
+            </script>
+        </dialog>
+
+    </main>
+    <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+            <div class="mdl-logo">
+                More Information
+            </div>
+            <ul class="mdl-mini-footer__link-list">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Privacy and Terms</a></li>
+                <li><a href="#">User Agreement</a></li>
+            </ul>
+        </div>
+        <div class="mdl-mini-footer__right-section">
+            <button class="mdl-mini-footer__social-btn"></button>
+            <button class="mdl-mini-footer__social-btn"></button>
+            <button class="mdl-mini-footer__social-btn"></button>
+        </div>
+    </footer>
+</div>
+
+<script src="../node_modules/rx/dist/rx.all.js" ></script>
+<script src="../node_modules/webrx/dist/web.rx.js" ></script>
+<script src="../dist/bundle.js" ></script>
+</body>
+</html>
