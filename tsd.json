@@ -4,5 +4,15 @@
   "ref": "master",
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
-  "installed": {}
+  "installed": {
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "94d8775a947f626269b06ccadd6f5e61839389d0"
+    },
+    "chai/chai.d.ts": {
+      "commit": "94d8775a947f626269b06ccadd6f5e61839389d0"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "94d8775a947f626269b06ccadd6f5e61839389d0"
+    }
+  }
 }

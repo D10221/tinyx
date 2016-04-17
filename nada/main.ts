@@ -73,12 +73,38 @@
                 }
             };
 
+                        
             this.login = ()=> {
-                this.close();
+                
+                this.error("");
+                
+                this.busy(true);
 
-                console.log(`login ins as ${this.username()}: ${this.password()}`);
+                Rx.Observable.timer(1000, 500).take(1).subscribe(()=>{
+                    
+                    this.busy(false);
+                    
+                    if(this.username() == "admin" && this.password() == "password ") {
+                        
+                        console.log(`login ins as ${this.username()}: ${this.password()}`);
+
+                        this.close();
+                        
+                    } else {
+                        
+                        this.error("Bad username || password ");
+                    }
+                    
+                });
+
             };
         }
+
+        hasError = wx.property(false);
+        
+        error = wx.property("");
+        
+        busy = wx.property(false);
 
         private loadUser: ()=> void;
         private saveUser: ()=> void;

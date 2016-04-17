@@ -19,6 +19,9 @@
             this.rememberme = wx.property(false);
             this.username = wx.property("");
             this.password = wx.property("");
+            this.hasError = wx.property(false);
+            this.error = wx.property("");
+            this.isBusy = wx.property(false);
             wx.messageBus.listen("login-dialog-show").subscribe(function (e) { return _this.show(); });
             this.rememberme(true);
             this.loadUser = function () {
@@ -46,8 +49,18 @@
                 }
             };
             this.login = function () {
-                _this.close();
-                console.log("login ins as " + _this.username() + ": " + _this.password());
+                _this.error("");
+                _this.isBusy(true);
+                Rx.Observable.timer(1000, 500).take(1).subscribe(function () {
+                    _this.isBusy(false);
+                    if (_this.username() == "admin" && _this.password() == "password ") {
+                        console.log("login ins as " + _this.username() + ": " + _this.password());
+                        _this.close();
+                    }
+                    else {
+                        _this.error("Bad username || password ");
+                    }
+                });
             };
         }
         return LoginDialogViewModel;

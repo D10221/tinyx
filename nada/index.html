@@ -10,9 +10,22 @@
 </div>
 
 
-
+<style>
+     .error {
+       color: red;
+    }
+    .busy {
+        color: green;
+    }
+    .hideme {
+        display: none;
+    }
+</style>
 <dialog id="login-dialog">
-    <h4  data-bind="text: label"></h4>
+    <div>
+        <h4  data-bind="text: label"></h4>
+        <span class="busy" data-bind="css: {hideme: !busy }"> busy....</span>
+    </div>
     <div >
         <form id="sign-in-form">
             <div >
@@ -37,6 +50,9 @@
                               id="xlabel">Keep me signed in</span>
             </label>
         </form>
+        <div data-bind="visible: error() != '' " style="padding: 10px">
+            <span class="error" data-bind="text: @error"></span>
+        </div>
     </div>
     <div >
         <button

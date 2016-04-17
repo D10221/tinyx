@@ -1,114 +1,47 @@
+// webpack ts loader needs it
+///<reference path="./LoginDialogViewModel.ts"/>
+///<reference path="./mdl.ts"/>
+
 
 import Observable = Rx.Observable;
 
-var loginDialog = <tiny.Dialog>document.getElementById('login-dialog');
+import IObservableProperty = wx.IObservableProperty;
 
-namespace tiny {
+import {Dialog} from "./definitions";
 
+import {LoginDialogViewModel} from "./LoginDialogViewModel";
 
-    import Observable = Rx.Observable;
+import MaterialSnackBarContainer = mdl.MaterialSnackBarContainer;
 
-    import IObservableProperty = wx.IObservableProperty;
+import SnackBarMessageData = mdl.SnackBarMessageData;
 
-    export interface Dialog extends HTMLElement{
-        showModal();
-        close();
-    }
+var loginDialog = <Dialog>document.getElementById('login-dialog');
 
-    class User {
-        constructor(public username: string, public password: string) {
+var snackbarContainer = <MaterialSnackBarContainer>document.querySelector('#material-snackBar-container');
 
-        }
-    }
+wx.messageBus
+    .listen("tinyx-snackbar-show")
+    .subscribe(message=> snackbarContainer.MaterialSnackbar.showSnackbar(<SnackBarMessageData>message));
 
-    export class LoginDialogViewModel {
+export class MainViewModel {
 
-        showCmd =  wx.command(()=> this.show());
+    brand = wx.property("Brilliant|Link...");
 
-        closeCmd = wx.command(()=> this.close());
+    isBusy = wx.property(false);
 
-        loginCmd = wx.command(()=> this.login());
+    showLoginDialogCmd = wx.command(()=> wx.messageBus.sendMessage({}, "login-dialog-show"));
 
-        show : ()=> void;
+    private loadConfig :() => void;
 
-        close: ()=> void ;
+    constructor() {
 
-        login: ()=> void;
+        this.loadConfig = ()=> {
 
-        label = 'Sign In';
+            this.isBusy(true);
 
-        rememberme = wx.property(false);
-
-        username = wx.property("");
-
-        password = wx.property("");
-
-        constructor(private dialog: Dialog) {
-
-            wx.messageBus.listen('login-dialog-show').subscribe(e=> this.show());
-
-            this.rememberme(true);
-
-            this.loadUser = () => {
-                console.log('maybe loading user');
-                if (this.rememberme) {
-                    var user:User = JSON.parse(localStorage.getItem('tinyx.user'));
-                    console.log(user);
-                    if (user) {
-                        this.username(user.username);
-                        this.password(user.password);
-                    }
-                }
-            };
-
-            this.loadUser();
-            
-            this.show = () => {
-                this.dialog.showModal();
-            };
-
-            this.close = ()=>{
-                this.dialog.close();
-            };
-
-            this.saveUser =() => {
-                if(this.rememberme){
-                    localStorage['tinyx.user'] =
-                        JSON.stringify(
-                            new User(this.username(), this.password()));
-                }
-            };
-
-            this.login = ()=> {
-              this.close();
-                
-                console.log(`login in as ${this.username()}: ${this.password()}`);
-            };
-        }
-
-        private loadUser: ()=> void;
-        private saveUser: ()=> void;
-
-
-    }
-
-    export class MainViewModel {
-
-        brand = wx.property("Brilliant|Link...");
-
-        isBusy = wx.property(false);
-
-        showLoginDialogCmd = wx.command(()=> wx.messageBus.sendMessage({}, "login-dialog-show"));
-
-        constructor() {
-
-            this.loadConfig = ()=> {
-
-                this.isBusy(true);
-
-                Observable.timer(1000, 500)
-                    .take(1)
-                    .subscribe(e=> {
+            Observable.timer(1000, 500)
+                .take(1)
+                .subscribe( e => {
 
                     fetch('../data/app_settings.json')
                         .then(r=> r.json())
@@ -123,35 +56,31 @@ namespace tiny {
                     });
 
                 });
-            };
+        };
 
-            this.loadConfig();
-        }
-
-        private loadConfig() {
-
-        }
+        this.loadConfig();
     }
 }
-
 
 wx.router.state({
     name: "home",
     views: {'main': "hello"}
 });
 
-
 wx.router.go('home');
 
-var mainViewModel = new tiny.MainViewModel();
 
-wx.applyBindings(mainViewModel, document.getElementById("main-view"));
+wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
 
-wx.applyBindings(new tiny.LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
+wx.applyBindings(new LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
 
-// Observable.timer(500, 500).subscribe(e=> {
-//     mainViewModel.loginDialogViewModel.rememberme(
-//         !mainViewModel.loginDialogViewModel.rememberme()
-//     );
-// });
+//wx.applyBindings(new SnackBarViewModel(snackbarContainer), snackbarContainer);
 
+Observable
+    .timer(3000, 0)
+    .take(1)
+    .subscribe( e =>
+        wx.messageBus
+            .sendMessage(<SnackBarMessageData>{
+                message: "Hello", timeout: 2000, actionHandler: ()=> {}, actionText: "undo"
+            }, "tinyx-snackbar-show") );
