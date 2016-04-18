@@ -3,6 +3,7 @@
         data-bind="command: showLoginDialogCmd">
 
     <i class="material-icons">account_box</i>
-    <div class="mdl-tooltip" for="material-icons" data-bind="text: userData.username">
+    <div class="mdl-tooltip" for="show-sign-in-dialog">
+        <span data-bind="text: @username"></span>
     </div>
 </button>

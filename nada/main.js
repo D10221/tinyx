@@ -1,4 +1,5 @@
 ///<reference path="../typings/tsd.d.ts"/>
+///<reference path="../src/reference.d.ts"/>
 (function () {
     var loginDialog = document.getElementById('login-dialog');
     var User = (function () {
@@ -25,10 +26,10 @@
             wx.messageBus.listen("login-dialog-show").subscribe(function (e) { return _this.show(); });
             this.rememberme(true);
             this.loadUser = function () {
-                console.log('maybe loading user');
+                // console.log('maybe loading user');
                 if (_this.rememberme) {
                     var user = JSON.parse(localStorage.getItem('tinyx.user'));
-                    console.log(user);
+                    // console.log(user);
                     if (user) {
                         _this.username(user.username);
                         _this.password(user.password);
@@ -54,7 +55,7 @@
                 Rx.Observable.timer(1000, 500).take(1).subscribe(function () {
                     _this.busy(false);
                     if (_this.username() == "admin" && _this.password() == "password ") {
-                        console.log("login ins as " + _this.username() + ": " + _this.password());
+                        //console.log(`login ins as ${this.username()}: ${this.password()}`);
                         _this.close();
                     }
                     else {
@@ -94,7 +95,20 @@
         };
         return MainViewModel;
     }());
+    wx.app.component('plain-link', {
+        template: "\n            <a data-bind=\"attr: {href: link}\" ><span data-bind=\"text: label\"></span></a>\n        ",
+        /***
+         * LinkViewModel
+         * @param params is an object whose key/value pairs are the parameters, passed from the component binding or custom element.
+         */
+        viewModel: function (params) {
+            console.log(params);
+            return {
+                link: (params.link ? params.link : "/help"),
+                label: (params.label ? params.label : "???")
+            };
+        }
+    });
     wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
     wx.applyBindings(new LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
 })();
-//# sourceMappingURL=main.js.map

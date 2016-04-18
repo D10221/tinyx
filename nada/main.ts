@@ -1,4 +1,6 @@
 ///<reference path="../typings/tsd.d.ts"/>
+///<reference path="../src/reference.d.ts"/>
+
 
 (function () {
 
@@ -44,10 +46,10 @@
             this.rememberme(true);
 
             this.loadUser = () => {
-                console.log('maybe loading user');
+               // console.log('maybe loading user');
                 if (this.rememberme) {
                     var user:User = JSON.parse(localStorage.getItem('tinyx.user'));
-                    console.log(user);
+                   // console.log(user);
                     if (user) {
                         this.username(user.username);
                         this.password(user.password);
@@ -86,7 +88,7 @@
                     
                     if(this.username() == "admin" && this.password() == "password ") {
                         
-                        console.log(`login ins as ${this.username()}: ${this.password()}`);
+                        //console.log(`login ins as ${this.username()}: ${this.password()}`);
 
                         this.close();
                         
@@ -153,6 +155,24 @@
 
         }
     }
+
+
+    wx.app.component('plain-link',{
+        template:`
+            <a data-bind="attr: {href: link}" ><span data-bind="text: label"></span></a>
+        `,
+        /***
+         * LinkViewModel
+         * @param params is an object whose key/value pairs are the parameters, passed from the component binding or custom element.
+         */
+        viewModel: ( params )=> {
+            console.log(params)
+            return {
+                link: ( params.link ? params.link : "/help" ),
+                label: ( params.label ? params.label : "???" )
+            };
+        }
+    });
 
     wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
 

@@ -46,8 +46,7 @@
 <body>
 <!-- The drawer is always open in large screens. The header is always shown,
   even in small screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
-                mdl-layout--fixed-header" id="main-view">
+<div id="main-view" class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title" data-bind="text: brand"></span>
@@ -64,11 +63,7 @@
                            id="fixed-header-drawer-exp">
                 </div>
             </div>
-            <!--<button id="show-sign-in-dialog"-->
-                    <!--class="mdl-button mdl-js-button mdl-button&#45;&#45;icon mdl-js-ripple-effect "-->
-                    <!--data-bind="command: showLoginDialogCmd">-->
-                <!--<i class="material-icons">account_box</i>-->
-            <!--</button>-->
+            <!--wx component-->
             <login-button></login-button>
         </div>
     </header>
@@ -98,123 +93,11 @@
                 </div>
                 <div class="mdl-tabs__panel is-active" id="tab1">
                     <div class="page-content">
-                        <!-- Your content goes here -->
-                        <div class="mdl-grid" style="padding-top: 50px">
-                            <div class="mdl-cell mdl-cell--1-col"></div>
-                            <div class="mdl-cell mdl-cell--10-col">
-                                <!-- Wide card with share menu button -->
-                                <div class="mdl-card mdl-shadow--2dp" style="width: 750px">
-                                    <div class="mdl-card__title">
-                                        <h2 class="mdl-card__title-text">Materials</h2>
-                                    </div>
-                                    <div>
-                                        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable">
-                                            <thead>
-                                            <tr>
-                                                <th class="mdl-data-table__cell--non-numeric ">Material</th>
-                                                <th class="mdl-data-table__header--sorted-ascending">Quantity</th>
-                                                <th>Unit price</th>
-                                                <th>Tax</th>
-                                                <th>Nnn</th>
-                                                <th>Tax</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                                                <td>
-                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                        <input class="mdl-textfield__input"
-                                                               type="text"
-                                                               pattern="-?[0-9]*(\.[0-9]+)?"
-                                                               id="row0Column0">
-                                                        <label class="mdl-textfield__label"
-                                                               for="row0Column0">...</label>
-                                                        <span class="mdl-textfield__error">Invalid input!</span>
-                                                    </div>
-                                                </td>
-                                                <td> R2.90</td>
-                                                <td> R1.14</td>
-                                                <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                                                <td>250</td>
-                                                <td> R2.90</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                                                <td>50</td>
-                                                <td>R1.25</td>
-                                                <td>R1.14</td>
-                                                <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                                                <td>50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)
-                                                </td>
-                                                <td>10</td>
-                                                <td>R12.35</td>
-                                                <td> R1.14</td>
-                                                <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)
-                                                </td>
-                                                <td>10</td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="mdl-data-table__cell--non-numeric">None</td>
-                                                <td>100</td>
-                                                <td>R120.35</td>
-                                                <td> R10.14</td>
-                                                <td class="mdl-data-table__cell--non-numeric">None</td>
-                                                <td>100</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mdl-card__actions mdl-card--border">
-                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                                            <!-- Right aligned menu below button -->
-                                            <i class="material-icons">chevron_left</i>
-                                        </button>
-                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                                            <!-- Right aligned menu below button -->
-                                            <i class="material-icons">chevron_right</i>
-                                        </button>
-                                    </div>
-                                    <div class="mdl-card__menu">
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable"
-                                             style="padding-top: 0">
-                                            <label class="mdl-button mdl-js-button mdl-button--icon"
-                                                   for="table-search-text-field">
-                                                <i class="material-icons" style="padding-top: 3px">search</i>
-                                            </label>
-                                            <div class="mdl-textfield__expandable-holder" style="padding-top: 0">
-                                                <input class="mdl-textfield__input" type="text" name="sample"
-                                                       id="table-search-text-field">
-                                            </div>
-                                        </div>
-                                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                                            <!-- Right aligned menu below button -->
-                                            <i class="material-icons">autorenew</i>
-                                        </button>
-                                        <button id="demo-menu-lower-right"
-                                                class="mdl-button mdl-js-button mdl-button--icon">
-                                            <i class="material-icons">more_vert</i>
-                                        </button>
-                                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                                            for="demo-menu-lower-right">
-                                            <li class="mdl-menu__item">Some Action</li>
-                                            <li class="mdl-menu__item">Another Action</li>
-                                            <li disabled class="mdl-menu__item">Disabled Action</li>
-                                            <li class="mdl-menu__item">Yet Another Action</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mdl-cell mdl-cell--1-col"></div>
-                        </div>
+                        <div data-bind="component: { name:  'materials' }"></div>
                     </div>
                 </div>
-                <div class="mdl-tabs__panel" id="tab2">
-                    <p>Second tab's content.</p>
+                <div class="mdl-tabs__panel " id="tab2">
+                   <div data-bind="component: { name: 'tab-two' , params: { key: 'x' , value: 'y' } }"></div>
                 </div>
                 <div class="mdl-tabs__panel" id="tab3">
                     <p>Third tab's content.</p>

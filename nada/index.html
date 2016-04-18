@@ -5,7 +5,10 @@
     <title>Nada</title>
 </head>
 <body>
-<div id="main-view">
+<div id="main-view" >
+
+    <div data-bind="component: {  name: 'plain-link', params: { link: '/xyz', label : '!!!' } } "></div>
+
     <buttom data-bind="command: showLoginCmd"> Login </buttom>
 </div>
 

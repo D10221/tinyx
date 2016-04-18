@@ -66,8 +66,8 @@ export class LoginDialogViewModel implements IHaveId {
                 this.rememberme(true);
                 this.signedIn(true);
                 this.label("Sign out");
-                
-                console.log(this.userData);
+
+                this.notifyLogginChanged();
             }
         };
 
@@ -101,7 +101,7 @@ export class LoginDialogViewModel implements IHaveId {
                     this.userData = null;
                     this.updateStore();
 
-                    wx.messageBus.sendMessage(null, "tinyx.user.login");
+                    this.notifyLogginChanged();
 
                     this.isBusy(false);
 
@@ -115,10 +115,11 @@ export class LoginDialogViewModel implements IHaveId {
             //Simulate delay: call to authenticate , gets token and roles
             Observable.timer(1000, 0).take(1).subscribe(()=> {
 
-                if (this.username() != "admin" || password != "password") {
+                if ( this.username() != "admin" || password != "password" ) {
                     //FAIL
-                    wx.messageBus.sendMessage(null, "tinyx.user.login");
+                    this.userData = null;
                     this.error("BAD username || password");
+                    this.notifyLogginChanged();
 
                 } else {
 
@@ -130,7 +131,7 @@ export class LoginDialogViewModel implements IHaveId {
 
                     this.updateStore();
 
-                    wx.messageBus.sendMessage(this.userData, "tinyx.user.login");
+                    this.notifyLogginChanged();
 
                     this.close();
                 }
@@ -143,6 +144,10 @@ export class LoginDialogViewModel implements IHaveId {
         if(!this.signedIn()){
             this.show();
         }
+    }
+
+    private notifyLogginChanged() {
+        wx.messageBus.sendMessage(this.userData, "tinyx.user.login");
     }
 
     private updateStore() {
