@@ -7,64 +7,33 @@
                 <h2 class="mdl-card__title-text">Materials</h2>
             </div>
             <div>
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable">
+                <table class="mdl-data-table mdl-js-data-table " style="width: 100%">
                     <thead>
                     <tr>
-                        <th class="mdl-data-table__cell--non-numeric ">Material</th>
-                        <th class="mdl-data-table__header--sorted-ascending">Quantity</th>
-                        <th>Unit price</th>
-                        <th>Tax</th>
-                        <th>Nnn</th>
-                        <th>Tax</th>
+                        <th class="mdl-data-table__cell--non-numeric" style="width: 10%;">
+                            <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                                <input type="checkbox" id="chkbox1" class="mdl-checkbox__input" data-bind="command: toggleSelectionCmd">
+                                <span class="mdl-checkbox__label"></span>
+                            </label>
+                        </th>
+                        <th class="mdl-data-table__cell--non-numeric" style="width: 20%">Material</th>
+                        <th style="width: 20%">Quantity</th>
+                        <th style="width: 20%">Unit price</th>
+                        <th style="width: 20%">Tax</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                        <td>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input"
-                                       type="text"
-                                       pattern="-?[0-9]*(\.[0-9]+)?"
-                                       id="row0Column0">
-                                <label class="mdl-textfield__label"
-                                       for="row0Column0">...</label>
-                                <span class="mdl-textfield__error">Invalid input!</span>
-                            </div>
-                        </td>
-                        <td> R2.90</td>
-                        <td> R1.14</td>
-                        <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                        <td>250</td>
-                        <td> R2.90</td>
-                    </tr>
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                        <td>50</td>
-                        <td>R1.25</td>
-                        <td>R1.14</td>
-                        <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)
-                        </td>
-                        <td>10</td>
-                        <td>R12.35</td>
-                        <td> R1.14</td>
-                        <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)
-                        </td>
-                        <td>10</td>
-
-                    </tr>
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric">None</td>
-                        <td>100</td>
-                        <td>R120.35</td>
-                        <td> R10.14</td>
-                        <td class="mdl-data-table__cell--non-numeric">None</td>
-                        <td>100</td>
-                    </tr>
+                    <tbody data-bind="foreach: materials">
+                        <tr >
+                            <th class="mdl-data-table__cell--non-numeric " style="width: 10%;">
+                                <input type="checkbox" class="mdl-checkbox__input" data-bind="checked: selected" >
+                            </th>
+                            <td class="mdl-data-table__cell--non-numeric" style="width: 25%">
+                               <span data-bind="text: material, visible: !editing, command: toggleEdit" ></span>
+                            </td>
+                            <td data-bind="text: quantity" > </td>
+                            <td data-bind="text: unitPrice" > </td>
+                            <td data-bind="text: tax" > </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

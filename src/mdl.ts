@@ -1,4 +1,12 @@
+declare  const componentHandler : mdl.IComponentHandler;
+
 declare module mdl {
+
+    export interface IComponentHandler {
+        upgradeAllRegistered();
+    }
+    export const componentHandler : any ;
+
 
     export interface SnackBarMessageData {
         message : string;

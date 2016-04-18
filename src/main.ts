@@ -18,6 +18,8 @@ import SnackBarMessageData = mdl.SnackBarMessageData;
 import {MaterialsViewModel} from "./components/materials/MaterialsViewModel";
 
 
+wx.app.devModeEnable();
+
 var loginDialog = <Dialog>document.getElementById('login-dialog');
 
 var snackbarContainer = <MaterialSnackBarContainer>document.querySelector('#material-snackBar-container');
@@ -61,10 +63,13 @@ wx.app.component('plain-link',{
 
 wx.app.component('materials', {
     template: require('../src/components/materials/materials-template.html'),
-    viewModel: (params)=> new MaterialsViewModel(params)
+    viewModel: (params)=> new MaterialsViewModel({x: 1}),
+    preBindingInit: 'preBindingInit',
+    postBindingInit: 'postBindingInit',
 });
 
 wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
+
 
 wx.applyBindings(new LoginDialogViewModel(loginDialog), loginDialog);
 
@@ -76,3 +81,5 @@ Observable
             .sendMessage(<SnackBarMessageData>{
                 message: "Hello", timeout: 2000, actionHandler: ()=> {}, actionText: "undo"
             }, "tinyx-snackbar-show") );
+
+
