@@ -5,14 +5,14 @@ export class TinytStore<T> {
 
     /*
      interface Storage {
-     length: number;
-     clear(): void;
-     getItem(key: string): any;
-     key(index: number): string;
-     removeItem(key: string): void;
-     setItem(key: string, data: string): void;
-     [key: string]: any;
-     [index: number]: string;
+         length: number;
+         clear(): void;
+         getItem(key: string): any;
+         key(index: number): string;
+         removeItem(key: string): void;
+         setItem(key: string, data: string): void;
+         [key: string]: any;
+         [index: number]: string;
      }
      */
 

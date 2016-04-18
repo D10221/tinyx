@@ -3,14 +3,9 @@
 
 import {assert} from 'chai'
 
-import {LoginDialogViewModel} from "../src/LoginDialogViewModel";
-
-import {Dialog} from "../src/definitions";
-
-
 describe("#" , ()=>{
    it("should work", ()=>
    {
-        var vm = LoginDialogViewModel(null);
+
    });
 });

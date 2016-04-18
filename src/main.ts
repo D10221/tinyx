@@ -14,6 +14,7 @@ import {LoginDialogViewModel} from "./LoginDialogViewModel";
 import MaterialSnackBarContainer = mdl.MaterialSnackBarContainer;
 
 import SnackBarMessageData = mdl.SnackBarMessageData;
+import {LoginButtonViewModel} from "./LoginButtonViewModel";
 
 var loginDialog = <Dialog>document.getElementById('login-dialog');
 
@@ -28,9 +29,7 @@ export class MainViewModel {
     brand = wx.property("Brilliant|Link...");
 
     isBusy = wx.property(false);
-
-    showLoginDialogCmd = wx.command(()=> wx.messageBus.sendMessage({}, "login-dialog-show"));
-
+    
     private loadConfig :() => void;
 
     constructor() {
@@ -41,7 +40,7 @@ export class MainViewModel {
 
             Observable.timer(1000, 500)
                 .take(1)
-                .subscribe( e => {
+                .subscribe( () => {
 
                     fetch('../data/app_settings.json')
                         .then(r=> r.json())
@@ -69,12 +68,15 @@ wx.router.state({
 
 wx.router.go('home');
 
+wx.app.component('login-button', {
+   viewModel:  ()=> new LoginButtonViewModel(),
+    template: require('../templates/login-button-template.html')
+});
 
 wx.applyBindings(new MainViewModel(), document.getElementById("main-view"));
 
-wx.applyBindings(new LoginDialogViewModel(loginDialog), document.getElementById("login-dialog"));
+wx.applyBindings(new LoginDialogViewModel(loginDialog), loginDialog);
 
-//wx.applyBindings(new SnackBarViewModel(snackbarContainer), snackbarContainer);
 
 Observable
     .timer(3000, 0)

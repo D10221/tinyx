@@ -19,7 +19,11 @@ export class LoginDialogViewModel implements IHaveId {
 
     showCmd = wx.command(()=> this.show());
 
-    closeCmd = wx.command(()=> this.close());
+    closeCmd = wx.command(()=> { 
+        if(this.signedIn()){
+            this.close();
+        }
+    });
 
     loginCmd = wx.command(()=> this.login());
 
@@ -34,8 +38,6 @@ export class LoginDialogViewModel implements IHaveId {
     rememberme = wx.property(false);
 
     username = wx.property("");
-
-    private notify:(string)=>void;
 
     private userData:UserData;
 
@@ -79,14 +81,6 @@ export class LoginDialogViewModel implements IHaveId {
             this.dialog.close();
         };
 
-
-        this.notify = (message: string)=> {
-            wx.messageBus.sendMessage(<SnackBarMessageData>{
-                message: message, timeout: 2000, actionHandler: ()=> {
-                }, actionText: "undo"
-            }, "tinyx-snackbar-show");
-        };
-
         this.login = ()=> {
 
             this.error("");
@@ -109,8 +103,6 @@ export class LoginDialogViewModel implements IHaveId {
 
                     wx.messageBus.sendMessage(null, "tinyx.user.login");
 
-                    this.notify('signed out!');
-
                     this.isBusy(false);
 
                     this.updateStore();
@@ -121,13 +113,11 @@ export class LoginDialogViewModel implements IHaveId {
 
             var password = this.getPassword();
             //Simulate delay: call to authenticate , gets token and roles
-            Observable.timer(1000, 0).take(1).subscribe((e)=> {
+            Observable.timer(1000, 0).take(1).subscribe(()=> {
 
                 if (this.username() != "admin" || password != "password") {
                     //FAIL
                     wx.messageBus.sendMessage(null, "tinyx.user.login");
-                    var message = `BAD username || password : ${this.username()}: ${password}`;
-                    this.notify(message);
                     this.error("BAD username || password");
 
                 } else {

@@ -66,11 +66,12 @@
                            id="fixed-header-drawer-exp">
                 </div>
             </div>
-            <button id="show-sign-in-dialog"
-                    class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect "
-                    data-bind="command: showLoginDialogCmd">
-                <i class="material-icons">account_circle</i>
-            </button>
+            <!--<button id="show-sign-in-dialog"-->
+                    <!--class="mdl-button mdl-js-button mdl-button&#45;&#45;icon mdl-js-ripple-effect "-->
+                    <!--data-bind="command: showLoginDialogCmd">-->
+                <!--<i class="material-icons">account_box</i>-->
+            <!--</button>-->
+            <login-button></login-button>
         </div>
     </header>
     <div class="mdl-layout__drawer">
@@ -255,9 +256,8 @@
 <!--DIALOG-->
 <dialog class="mdl-dialog" id="login-dialog">
 
-    <div class="mdl-grid">
-
-        <h4 class="mdl-dialog__title" data-bind="text: @label"></h4>
+    <div class="mdl-grid " >
+        <h4 class="mdl-dialog__title"  data-bind="text: @label"></h4>
         <div style="padding-top: 30px;padding-left: 5px" data-bind="visible: isBusy">
             <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner "
                  data-bind="css: { 'is-active' : isBusy }"
