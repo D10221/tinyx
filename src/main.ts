@@ -26,7 +26,7 @@ wx.messageBus
 
 export class MainViewModel {
 
-    brand = wx.property("Brilliant|Link...");
+    brand = wx.property("?");
 
     isBusy = wx.property(false);
     
