@@ -1,3 +1,7 @@
+/*
+*  Name: ???
+* */
+
 export interface Dialog extends HTMLElement{
     showModal();
     close();

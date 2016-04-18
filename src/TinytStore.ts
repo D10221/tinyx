@@ -24,7 +24,11 @@ export class TinytStore<T> {
 
         this.getItem = ()=> {
 
-            return <T>JSON.parse(storage[`${this.prefix}.${this.key}`]);
+            try {
+                return <T>JSON.parse(storage[`${this.prefix}.${this.key}`]);
+            } catch (e) {
+                return null;
+            }
         };
 
         this.setItem = (item)=> {

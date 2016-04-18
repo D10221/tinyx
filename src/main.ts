@@ -1,20 +1,19 @@
-// webpack ts loader needs it
+// webpack ts loader needs this refs
 ///<reference path="./LoginDialogViewModel.ts"/>
 ///<reference path="./mdl.ts"/>
+///<reference path="./reference.d.ts"/>
+
+
+import {Dialog} from "./definitions";
+import {LoginDialogViewModel} from "./LoginDialogViewModel";
+import {LoginButtonViewModel} from "./LoginButtonViewModel";
 
 
 import Observable = Rx.Observable;
-
 import IObservableProperty = wx.IObservableProperty;
-
-import {Dialog} from "./definitions";
-
-import {LoginDialogViewModel} from "./LoginDialogViewModel";
-
 import MaterialSnackBarContainer = mdl.MaterialSnackBarContainer;
-
 import SnackBarMessageData = mdl.SnackBarMessageData;
-import {LoginButtonViewModel} from "./LoginButtonViewModel";
+
 
 var loginDialog = <Dialog>document.getElementById('login-dialog');
 

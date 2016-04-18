@@ -90,7 +90,7 @@ export class LoginDialogViewModel implements IHaveId {
             // Signing out
             if(this.signedIn()){
 
-                //Simulate dealey
+                //Simulate delay
                 Observable.timer(1000,0).take(1).subscribe( () =>{
 
                     this.isBusy(true);
